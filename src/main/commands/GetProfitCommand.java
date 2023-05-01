@@ -1,6 +1,7 @@
 package main.commands;
 
 import main.Ecommerce;
+import main.exceptions.NoProductException;
 
 import java.util.List;
 
@@ -14,13 +15,17 @@ public class GetProfitCommand implements EcommerceCommand{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws NoProductException {
+        if (!ecommerce.getCatalog().containsKey(id)) {
+            throw new NoProductException(id);
+        }
+
         double profit = 0;
 
         List<PurchaseProductCommand> purchaseHistory = ecommerce.getPurchaseHistory();
         List<OrderProductCommand> orderHistory = ecommerce.getOrderHistory();
 
-        if (orderHistory.size() == 0){
+        if (orderHistory.size() == 0 || purchaseHistory.size() == 0){
             System.out.println(profit);
             return;
         }
