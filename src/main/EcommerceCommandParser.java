@@ -97,6 +97,13 @@ public class EcommerceCommandParser {
                     } else {
                         return new InvalidCommand();
                     }
+
+                case "get_order_report":
+                    if (argumentsSize == 0) {
+                        return new GetOrderReportCommand(ecommerce);
+                    }
+                    return new InvalidCommand();
+
                 default:
                     return new InvalidCommand();
             }

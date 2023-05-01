@@ -9,9 +9,16 @@ public class GetAveragePriceCommand implements EcommerceCommand{
     private Ecommerce ecommerce;
     private String id;
 
+    private double averagePrice;
+
     public GetAveragePriceCommand(Ecommerce ecommerce, String id) {
         this.ecommerce = ecommerce;
         this.id = id;
+        this.averagePrice = 0;
+    }
+
+    public double getAveragePrice() {
+        return averagePrice;
     }
 
     @Override
@@ -25,7 +32,7 @@ public class GetAveragePriceCommand implements EcommerceCommand{
 
         List<PurchaseProductCommand> purchaseHistory = ecommerce.getPurchaseHistory();
         if (purchaseHistory.size() == 0){
-            System.out.println(0);
+            averagePrice = 0;
             return;
         }
 
@@ -36,7 +43,6 @@ public class GetAveragePriceCommand implements EcommerceCommand{
             }
         }
 
-        double averagePrice = totalPrice / count;
-        System.out.println(averagePrice);
+        averagePrice = totalPrice / count;
     }
 }
